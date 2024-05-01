@@ -2,17 +2,15 @@ import re
 
 
 def generate_letter_map():
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !?.'
     alphabet_mapping = {letter: index for index, letter in enumerate(alphabet)}
     index_mapping = {index: letter for index, letter in enumerate(alphabet)}
     return alphabet_mapping, index_mapping
 
 
 def sanitize_input(input_string):
-    # Convert all letters to uppercase
-    input_string = input_string.upper()
     # Remove everything but capital English letters
-    sanitized_string = re.sub(r'[^A-Z]', '', input_string)
+    sanitized_string = re.sub(r'[^A-Za-z0-9 !?.]', '', input_string)
     return sanitized_string
 
 
