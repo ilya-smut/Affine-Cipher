@@ -2,11 +2,12 @@ from affine_cipher import AffineCipher
 
 Af = AffineCipher()
 plaintext = 'This is an example text. It works absolutely fine!!!'
-
-key = (13, 1)
+key = Af.get_random_key()
 
 ciphertext = Af.encrypt(plaintext, key)
-decrypted_text = Af.decrypt(ciphertext, key)
+print('CIPHERTEXT:', ciphertext)
 
-print(ciphertext)
-print(decrypted_text)
+decrypted_message = Af.decrypt(ciphertext, key)
+print('DECRYPTED:', decrypted_message)
+
+print('KEY:', key)

@@ -25,10 +25,16 @@ class AffineCipher:
             string += self.match_map(i)
         return string
 
+    def get_random_key(self):
+        return utils.get_random_key(self.modulo)
+
+    def make_key_manually(self, factor, additive):
+        return utils.make_key_manually(factor, additive, self.modulo)
+
     def encrypt(self, plaintext, key):
         ciphertext = []
         plaintext_indexes = self.string_to_indexes(plaintext)
-        factor, additive = key
+        factor, additive = utils.deduce_key(key, self.modulo)
 
         # Ciphertext index = (index * factor + additive ) modulo 66
 
@@ -40,7 +46,7 @@ class AffineCipher:
     def decrypt(self, ciphertext, key):
         plaintext = []
         ciphertext_indexes = self.string_to_indexes(ciphertext)
-        factor, additive = key
+        factor, additive = utils.deduce_key(key, self.modulo)
         reverse_factor = utils.find_mod_inverse(factor, self.modulo)
         for index in ciphertext_indexes:
             index = (index - additive) % self.modulo

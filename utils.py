@@ -1,3 +1,4 @@
+import random
 import re
 
 
@@ -29,3 +30,32 @@ def find_mod_inverse(a, m):
         q = u3 // v3  # Note that // is the integer division operator.
         v1, v2, v3, u1, u2, u3 = (u1 - q * v1), (u2 - q * v2), (u3 - q * v3), v1, v2, v3
     return u1 % m
+
+
+def legal_factor(factor, modulo):
+    if gcd(factor, modulo) != 1:
+        return False
+    else:
+        return True
+
+
+def get_random_key(modulo):
+    while True:
+        factor = random.randint(2, modulo-1)
+        additive = random.randint(2, modulo-1)
+        if legal_factor(factor, modulo):
+            return factor * modulo + additive
+
+
+def deduce_key(key, modulo):
+    additive = key % modulo
+    factor = (key - additive) // modulo
+    return factor, additive
+
+
+def make_key_manually(factor, additive, modulo):
+    if legal_factor(factor, modulo):
+        return (factor * modulo) + (additive % modulo)
+    else:
+        print('numbers are not coprime')
+        return None
