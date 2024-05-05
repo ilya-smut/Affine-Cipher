@@ -53,6 +53,13 @@ def deduce_key(key, modulo):
     return factor, additive
 
 
+def verify_key(key, modulo):
+    factor, additive = deduce_key(key, modulo)
+    if legal_factor(factor, modulo):
+        return True
+    else:
+        return False
+
 def make_key_manually(factor, additive, modulo):
     if legal_factor(factor, modulo):
         return (factor * modulo) + (additive % modulo)

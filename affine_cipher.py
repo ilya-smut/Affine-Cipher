@@ -1,4 +1,4 @@
-import utils
+from AffineCipher import utils
 
 
 class AffineCipher:
@@ -46,11 +46,14 @@ class AffineCipher:
     def decrypt(self, ciphertext, key):
         plaintext = []
         ciphertext_indexes = self.string_to_indexes(ciphertext)
-        factor, additive = utils.deduce_key(key, self.modulo)
-        reverse_factor = utils.find_mod_inverse(factor, self.modulo)
-        for index in ciphertext_indexes:
-            index = (index - additive) % self.modulo
-            index = (index * reverse_factor) % self.modulo
-            plaintext.append(index)
-        return self.indexes_to_string(plaintext)
+        if utils.verify_key(key, self.modulo):
+            factor, additive = utils.deduce_key(key, self.modulo)
+            reverse_factor = utils.find_mod_inverse(factor, self.modulo)
+            for index in ciphertext_indexes:
+                index = (index - additive) % self.modulo
+                index = (index * reverse_factor) % self.modulo
+                plaintext.append(index)
+            return self.indexes_to_string(plaintext)
+        else:
+            return None
 
